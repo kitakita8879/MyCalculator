@@ -9,33 +9,12 @@ import android.widget.TextView;
 import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btn_0;
-    private Button btn_1;
-    private Button btn_2;
-    private Button btn_3;
-    private Button btn_4;
-    private Button btn_5;
-    private Button btn_6;
-    private Button btn_7;
-    private Button btn_8;
-    private Button btn_9;
-    private Button add;
-    private Button sub;
-    private Button mul;
-    private Button div;
-    private Button equ;
-    private Button dot;
-    private Button clear;
-    private Button L_arrow;
-    private Button R_arrow;
-    //private Button del;//
     private TextView ans;
-    private TextView test;
     private TextView tmp;
 
-    private Double num1 = 0.0, num2 = 0.0, ansnum = 0.0, ansView = 0.0;
-    private String tmpNum;
-    private Stack<String> formula = new Stack<String>();
+    private Double ans_num = 0.0;
+    private Double ansView = 0.0;
+    private final Stack<String> formula = new Stack<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,26 +27,26 @@ public class MainActivity extends AppCompatActivity {
     private void FindView(){
         ans = findViewById(R.id.Ans);
         tmp = findViewById(R.id.tmp);
-        btn_0 = findViewById(R.id.btn_0);
-        btn_1 = findViewById(R.id.btn_1);
-        btn_2 = findViewById(R.id.btn_2);
-        btn_3 = findViewById(R.id.btn_3);
-        btn_4 = findViewById(R.id.btn_4);
-        btn_5 = findViewById(R.id.btn_5);
-        btn_6 = findViewById(R.id.btn_6);
-        btn_7 = findViewById(R.id.btn_7);
-        btn_8 = findViewById(R.id.btn_8);
-        btn_9 = findViewById(R.id.btn_9);
-        add = findViewById(R.id.Add);
-        sub = findViewById(R.id.Sub);
-        mul = findViewById(R.id.Mul);
-        div = findViewById(R.id.Div);
-        dot = findViewById(R.id.Dot);
-        clear = findViewById(R.id.Clear);
-        L_arrow = findViewById(R.id.LeftArr);
-        R_arrow = findViewById(R.id.RightArr);
-        //del = findViewById(R.id.Del);
-        equ = findViewById(R.id.Equ);
+        Button btn_0 = findViewById(R.id.btn_0);
+        Button btn_1 = findViewById(R.id.btn_1);
+        Button btn_2 = findViewById(R.id.btn_2);
+        Button btn_3 = findViewById(R.id.btn_3);
+        Button btn_4 = findViewById(R.id.btn_4);
+        Button btn_5 = findViewById(R.id.btn_5);
+        Button btn_6 = findViewById(R.id.btn_6);
+        Button btn_7 = findViewById(R.id.btn_7);
+        Button btn_8 = findViewById(R.id.btn_8);
+        Button btn_9 = findViewById(R.id.btn_9);
+        Button add = findViewById(R.id.Add);
+        Button sub = findViewById(R.id.Sub);
+        Button mul = findViewById(R.id.Mul);
+        Button div = findViewById(R.id.Div);
+        Button dot = findViewById(R.id.Dot);
+        Button clear = findViewById(R.id.Clear);
+        Button l_arrow = findViewById(R.id.LeftArr);
+        Button r_arrow = findViewById(R.id.RightArr);
+        //Button del = findViewById(R.id.Del);//
+        Button equ = findViewById(R.id.Equ);
 
         btn_0.setOnClickListener(clickListen);
         btn_1.setOnClickListener(clickListen);
@@ -86,195 +65,195 @@ public class MainActivity extends AppCompatActivity {
         clear.setOnClickListener(clickListen);
         dot.setOnClickListener(clickListen);
         equ.setOnClickListener(clickListen);
-        L_arrow.setOnClickListener(clickListen);
-        R_arrow.setOnClickListener(clickListen);
+        l_arrow.setOnClickListener(clickListen);
+        r_arrow.setOnClickListener(clickListen);
     }
 
-    private Button.OnClickListener clickListen = new Button.OnClickListener(){
+    private final Button.OnClickListener clickListen = new Button.OnClickListener(){
 
         @Override
         public void onClick(View v) {
             Button b = (Button)v;
 
-            switch (v.getId()){
-                case R.id.Clear:
-                    ans.setText("");
-                    tmp.setText("");
-                    while (!formula.isEmpty()) {
-                        formula.pop();
-                    }
-                    break;
-                case R.id.Add:
-                    ans.setText(ans.getText().toString() + b.getText().toString());
-                    tmpNum = tmp.getText().toString();
-                    if(tmpNum != null){
-                        if(formula.isEmpty()){
-                            formula.push(tmpNum);
-                        }else if(formula.peek() == "Mul"){
-                            num2 = Double.valueOf(tmpNum);
-                            formula.pop();
-                            num1 = Double.valueOf(formula.pop());
-                            num2 = num1 * num2;
-                            formula.push(num2.toString());
-                        }else if(formula.peek() == "Div"){
-                            num2 = Double.valueOf(tmpNum);
-                            formula.pop();
-                            num1 = Double.valueOf(formula.pop());
-                            num2 = num1 / num2;
-                            formula.push(num2.toString());
-                        }else {
-                            formula.push(tmpNum);
-                        }
-                        formula.push("Add");
-                    }
-                    tmp.setText("");
-                    break;
-                case R.id.Sub:
-                    ans.setText(ans.getText().toString() + b.getText().toString());
-                    tmpNum = tmp.getText().toString();
-                    if(tmpNum != null){
-                        if(formula.isEmpty()){
-                            formula.push(tmpNum);
-                        }else if(formula.peek() == "Mul"){
-                            num2 = Double.valueOf(tmpNum);
-                            formula.pop();
-                            num1 = Double.valueOf(formula.pop());
-                            num2 = num1 * num2;
-                            formula.push(num2.toString());
-                        }else if(formula.peek() == "Div"){
-                            num2 = Double.valueOf(tmpNum);
-                            formula.pop();
-                            num1 = Double.valueOf(formula.pop());
-                            num2 = num1 / num2;
-                            formula.push(num2.toString());
-                        }else {
-                            formula.push(tmpNum);
-                        }
-                        formula.push("Sub");
-                    }
-                    tmp.setText("");
-                    break;
-                case R.id.Mul:
-                    ans.setText(ans.getText().toString() + b.getText().toString());
-                    tmpNum = tmp.getText().toString();
-                    if(tmpNum != null){
-                        if(formula.isEmpty()){
-                            formula.push(tmpNum);
-                        }else if(formula.peek() == "Mul"){
-                            num2 = Double.valueOf(tmpNum);
-                            formula.pop();
-                            num1 = Double.valueOf(formula.pop());
-                            num2 = num1 * num2;
-                            formula.push(num2.toString());
-                        }else if(formula.peek() == "Div"){
-                            num2 = Double.valueOf(tmpNum);
-                            formula.pop();
-                            num1 = Double.valueOf(formula.pop());
-                            num2 = num1 / num2;
-                            formula.push(num2.toString());
-                        }else {
-                            formula.push(tmpNum);
-                        }
-                        formula.push("Mul");
-                    }
-                    tmp.setText("");
-                    break;
-                case R.id.Div:
-                    ans.setText(ans.getText().toString() + b.getText().toString());
-                    tmpNum = tmp.getText().toString();
-                    if(tmpNum != null){
-                        if(formula.isEmpty()){
-                            formula.push(tmpNum);
-                        }else if(formula.peek() == "Mul"){
-                            num2 = Double.valueOf(tmpNum);
-                            formula.pop();
-                            num1 = Double.valueOf(formula.pop());
-                            num2 = num1 * num2;
-                            formula.push(num2.toString());
-                        }else if(formula.peek() == "Div"){
-                            num2 = Double.valueOf(tmpNum);
-                            formula.pop();
-                            num1 = Double.valueOf(formula.pop());
-                            num2 = num1 / num2;
-                            formula.push(num2.toString());
-                        }else {
-                            formula.push(tmpNum);
-                        }
-                        formula.push("Div");
-                    }
-                    tmp.setText("");
-                    break;
-                case R.id.Equ:
-                    tmpNum = tmp.getText().toString();
-                    if(tmpNum != null){
+            double num1;
+            double num2;
+            String tmpNum, tmpAns;
+            //switch(v.getId()){} 從ADT14開始不支援，資源id非final，參考https://web.archive.org/web/20230203152426/http://tools.android.com/tips/non-constant-fields
+            int id = v.getId();
+            if (id == R.id.Clear) {
+                ans.setText("");
+                tmp.setText("");
+                while (!formula.isEmpty()) {
+                    formula.pop();
+                }
+            } else if (id == R.id.Add) {
+                tmpAns = ans.getText().toString() + b.getText().toString();
+                ans.setText(tmpAns);
+                tmpNum = tmp.getText().toString();
+                if (!tmpNum.isEmpty()) {
+                    if (formula.isEmpty()) {
                         formula.push(tmpNum);
-                        num2 = Double.valueOf(formula.pop());
-                        while (!formula.isEmpty()){
-                            tmp.setText(num2.toString());
-                            if(formula.peek() == "Mul"){
-                                formula.pop();
-                                num1 = Double.valueOf(formula.pop());
-                                num2 = num1 * num2;
-                                formula.push(num2.toString());
-                            }else if(formula.peek() == "Div"){
-                                formula.pop();
-                                num1 = Double.valueOf(formula.pop());
-                                num2 = num1 / num2;
-                                formula.push(num2.toString());
-                            }else if(formula.peek() == "Add"){
-                                formula.pop();
-                                num1 = Double.valueOf(formula.pop());
-                                num2 = num1 + num2;
-                                formula.push(num2.toString());
-                            }else if(formula.peek() == "Sub"){
-                                formula.pop();
-                                num1 = Double.valueOf(formula.pop());
-                                num2 = num1 - num2;
-                                formula.push(num2.toString());
-                            }
-                            num2 = Double.valueOf(formula.pop());
+                    } else if (formula.peek().equals("Mul")) {
+                        num2 = Double.parseDouble(tmpNum);
+                        formula.pop();
+                        num1 = Double.parseDouble(formula.pop());
+                        num2 = num1 * num2;
+                        formula.push(Double.toString(num2));
+                    } else if (formula.peek().equals("Div")) {
+                        num2 = Double.parseDouble(tmpNum);
+                        formula.pop();
+                        num1 = Double.parseDouble(formula.pop());
+                        num2 = num1 / num2;
+                        formula.push(Double.toString(num2));
+                    } else {
+                        formula.push(tmpNum);
+                    }
+                    formula.push("Add");
+                }
+                tmp.setText("");
+            } else if (id == R.id.Sub) {
+                tmpAns = ans.getText().toString() + b.getText().toString();
+                ans.setText(tmpAns);
+                tmpNum = tmp.getText().toString();
+                if (!tmpNum.isEmpty()) {
+                    if (formula.isEmpty()) {
+                        formula.push(tmpNum);
+                    } else if (formula.peek().equals("Mul")) {
+                        num2 = Double.parseDouble(tmpNum);
+                        formula.pop();
+                        num1 = Double.parseDouble(formula.pop());
+                        num2 = num1 * num2;
+                        formula.push(Double.toString(num2));
+                    } else if (formula.peek().equals("Div")) {
+                        num2 = Double.parseDouble(tmpNum);
+                        formula.pop();
+                        num1 = Double.parseDouble(formula.pop());
+                        num2 = num1 / num2;
+                        formula.push(Double.toString(num2));
+                    } else {
+                        formula.push(tmpNum);
+                    }
+                    formula.push("Sub");
+                }
+                tmp.setText("");
+            } else if (id == R.id.Mul) {
+                tmpAns = ans.getText().toString() + b.getText().toString();
+                ans.setText(tmpAns);
+                tmpNum = tmp.getText().toString();
+                if (!tmpNum.isEmpty()) {
+                    if (formula.isEmpty()) {
+                        formula.push(tmpNum);
+                    } else if (formula.peek().equals("Mul")) {
+                        num2 = Double.parseDouble(tmpNum);
+                        formula.pop();
+                        num1 = Double.parseDouble(formula.pop());
+                        num2 = num1 * num2;
+                        formula.push(Double.toString(num2));
+                    } else if (formula.peek().equals("Div")) {
+                        num2 = Double.parseDouble(tmpNum);
+                        formula.pop();
+                        num1 = Double.parseDouble(formula.pop());
+                        num2 = num1 / num2;
+                        formula.push(Double.toString(num2));
+                    } else {
+                        formula.push(tmpNum);
+                    }
+                    formula.push("Mul");
+                }
+                tmp.setText("");
+            } else if (id == R.id.Div) {
+                tmpAns = ans.getText().toString() + b.getText().toString();
+                ans.setText(tmpAns);
+                tmpNum = tmp.getText().toString();
+                if (!tmpNum.isEmpty()) {
+                    if (formula.isEmpty()) {
+                        formula.push(tmpNum);
+                    } else if (formula.peek().equals("Mul")) {
+                        num2 = Double.parseDouble(tmpNum);
+                        formula.pop();
+                        num1 = Double.parseDouble(formula.pop());
+                        num2 = num1 * num2;
+                        formula.push(Double.toString(num2));
+                    } else if (formula.peek().equals("Div")) {
+                        num2 = Double.parseDouble(tmpNum);
+                        formula.pop();
+                        num1 = Double.parseDouble(formula.pop());
+                        num2 = num1 / num2;
+                        formula.push(Double.toString(num2));
+                    } else {
+                        formula.push(tmpNum);
+                    }
+                    formula.push("Div");
+                }
+                tmp.setText("");
+            } else if (id == R.id.Equ) {
+                tmpNum = tmp.getText().toString();
+                if (!tmpNum.isEmpty()) {
+                    formula.push(tmpNum);
+                    num2 = Double.parseDouble(formula.pop());
+                    while (!formula.isEmpty()) {
+                        tmp.setText(String.valueOf(num2));
+                        if (formula.peek().equals("Mul")) {
+                            formula.pop();
+                            num1 = Double.parseDouble(formula.pop());
+                            num2 = num1 * num2;
+                            formula.push(Double.toString(num2));
+                        } else if (formula.peek().equals("Div")) {
+                            formula.pop();
+                            num1 = Double.parseDouble(formula.pop());
+                            num2 = num1 / num2;
+                            formula.push(Double.toString(num2));
+                        } else if (formula.peek().equals("Add")) {
+                            formula.pop();
+                            num1 = Double.parseDouble(formula.pop());
+                            num2 = num1 + num2;
+                            formula.push(Double.toString(num2));
+                        } else if (formula.peek().equals("Sub")) {
+                            formula.pop();
+                            num1 = Double.parseDouble(formula.pop());
+                            num2 = num1 - num2;
+                            formula.push(Double.toString(num2));
                         }
-                        ansnum = Math.round(num2 *10000) *0.0001;
-                        ansView = Math.round(ansnum *100) *0.01;
-                        ans.setText(ansView.toString());
+                        num2 = Double.parseDouble(formula.pop());
                     }
-                    tmp.setText("");
-                    break;
-
-                case R.id.LeftArr:
-                    int i = ansView.toString().length() - ansView.toString().indexOf('.') -1;
-                    if(i == 2){
-                        ansView = Math.round(ansnum *10) *0.1;
-                    }else if( i == 3){
-                        ansView = Math.round(ansnum *100) *0.01;
-                    }else if( i == 4){
-                        ansView = Math.round(ansnum *1000) *0.001;
-                    }else if(i == 1){
-                        ansView = Double.valueOf(Math.round(ansnum)) ;
-                    }
-                    ans.setText(ansView.toString());
-                    break;
-                case R.id.RightArr:
-                    int j = ansView.toString().length() - ansView.toString().indexOf('.') -1;
-                    if(j == 2){
-                        ansView = Math.round(ansnum *1000) *0.001;
-                    }else if( j == 1){
-                        ansView = Math.round(ansnum *100) *0.01;
-                    }else if( j == 0){
-                        ansView = Math.round(ansnum *10) *0.1;
-                    }else if(j == 3){
-                        ansView = Math.round(ansnum *10000) *0.0001;
-                    }
-                    ans.setText(ansView.toString());
-                    break;
-                default:
-                    if(tmp.getText().toString() == ""){
-                        tmp.setText(b.getText().toString());
-                    }else {
-                        tmp.setText(tmp.getText() + b.getText().toString());
-                    }
-                    ans.setText(ans.getText().toString() + b.getText().toString());
-                    break;
+                    ans_num = Math.round(num2 * 10000) * 0.0001;
+                    ansView = Math.round(ans_num * 100) * 0.01;
+                    ans.setText(String.format(ansView.toString()));
+                }
+                tmp.setText("");
+            } else if (id == R.id.LeftArr) {
+                int i = ansView.toString().length() - ansView.toString().indexOf('.') - 1;
+                if (i == 2) {
+                    ansView = Math.round(ans_num * 10) * 0.1;
+                } else if (i == 3) {
+                    ansView = Math.round(ans_num * 100) * 0.01;
+                } else if (i == 4) {
+                    ansView = Math.round(ans_num * 1000) * 0.001;
+                } else if (i == 1) {
+                    ansView = (double) Math.round(ans_num);
+                }
+                ans.setText(String.format(ansView.toString()));
+            } else if (id == R.id.RightArr) {
+                int j = ansView.toString().length() - ansView.toString().indexOf('.') - 1;
+                if (j == 2) {
+                    ansView = Math.round(ans_num * 1000) * 0.001;
+                } else if (j == 1) {
+                    ansView = Math.round(ans_num * 100) * 0.01;
+                } else if (j == 0) {
+                    ansView = Math.round(ans_num * 10) * 0.1;
+                } else if (j == 3) {
+                    ansView = Math.round(ans_num * 10000) * 0.0001;
+                }
+                ans.setText(String.format(ansView.toString()));
+            } else {
+                if (tmp.getText().toString().isEmpty()) {
+                    tmp.setText(b.getText().toString());
+                } else {
+                    tmpNum = tmp.getText() + b.getText().toString();
+                    tmp.setText(tmpNum);
+                }
+                tmpAns = ans.getText().toString() + b.getText().toString();
+                ans.setText(tmpAns);
             }
         }
     };
